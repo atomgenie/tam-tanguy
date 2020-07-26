@@ -7,6 +7,10 @@ export default () => {
     const [isInView, setIsInView] = useState(false)
     const divRef = useRef<HTMLDivElement>(null)
 
+    const orderedSkills = useMemo(() => {
+        return data.skills.sort((a, b) => b.amount - a.amount)
+    }, [])
+
     const offsetDiv = useMemo(() => {
         let offsetDiv = 0
         let elementTop: any = divRef.current
@@ -108,7 +112,7 @@ export default () => {
                         <div className={styles.skills}>
                             <div className={styles.titleSkills}>Skills</div>
                             <div className={styles.skillsList} ref={divRef}>
-                                {data.skills.map((skill, index) => (
+                                {orderedSkills.map((skill, index) => (
                                     <div
                                         key={skill.name}
                                         className={`${styles.skillItem} ${

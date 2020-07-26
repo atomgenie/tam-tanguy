@@ -134,6 +134,25 @@
             animation: bottomIn 2s;
 
             .dot {
+                @keyframes dotAnim {
+                    0% {
+                        position: relative;
+                        bottom: 0;
+                    }
+                    75% {
+                        position: relative;
+                        bottom: 0;
+                    }
+                    87% {
+                        position: relative;
+                        bottom: 12px;
+                    }
+                    100% {
+                        position: relative;
+                        bottom: 0;
+                    }
+                }
+
                 $size: 10px;
 
                 background-color: rgba(0, 0, 0, 0.3);
@@ -141,9 +160,15 @@
                 height: $size;
                 width: $size;
                 margin-right: 5px;
+                animation: dotAnim 4s normal 0.2s infinite;
+
+                &:first-child {
+                    animation: dotAnim 4s normal 0s infinite;
+                }
 
                 &:last-child {
                     margin-right: 0;
+                    animation: dotAnim 4s normal 0.4s infinite;
                 }
             }
         }

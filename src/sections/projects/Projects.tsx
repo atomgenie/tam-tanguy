@@ -10,7 +10,7 @@ export default () => {
 
     return (
         <div className={styles.root}>
-            <div className="columns">
+            <div className="columns is-widescreen">
                 <div className="column is-5">
                     <div
                         className={styles.left}
@@ -48,6 +48,14 @@ export default () => {
                         <div className={styles.rightContainer}>
                             <div className={styles.messages}>
                                 <div className={styles.topMessage}>{project.name}</div>
+                                {project.picture && (
+                                    <div className={styles.picture}>
+                                        <img
+                                            src={project.picture}
+                                            alt={`${project.name} illustration`}
+                                        />
+                                    </div>
+                                )}
                                 {project.tags.length > 0 && (
                                     <div className={styles.middleMessage}>
                                         {project.tags.map(tag => (

@@ -190,6 +190,7 @@
             overflow: hidden;
             transition: width 1.5s;
             white-space: nowrap;
+            border: 1px solid transparentize($color: $primary, $amount: 0.9);
 
             &:first-child {
                 margin-top: 0;

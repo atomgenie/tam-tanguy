@@ -3,4 +3,5 @@ export interface Project {
     tags: string[]
     description: string
     link?: string
+    picture?: string
 }
