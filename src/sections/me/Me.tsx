@@ -1,9 +1,47 @@
-import React from "react"
+import React, { useEffect, useState, useRef, useMemo } from "react"
 import styles from "./Me.module.scss"
 import { FiUser, FiSend } from "react-icons/fi"
 import { data } from "data"
 
 export default () => {
+    const [isInView, setIsInView] = useState(false)
+    const divRef = useRef<HTMLDivElement>(null)
+
+    const offsetDiv = useMemo(() => {
+        let offsetDiv = 0
+        let elementTop: any = divRef.current
+
+        while (elementTop) {
+            offsetDiv += elementTop.offsetTop
+            elementTop = elementTop.offsetParent
+        }
+        return offsetDiv || 1000
+    }, [divRef])
+
+    useEffect(() => {
+        if (isInView) {
+            return
+        }
+
+        const handleIsInView = () => {
+            if (!divRef.current) {
+                return
+            }
+            const scrollPosition = window.scrollY + (window.innerHeight - 300)
+
+            if (offsetDiv < scrollPosition) {
+                setIsInView(true)
+            }
+        }
+
+        handleIsInView()
+        window.addEventListener("scroll", handleIsInView, { passive: true })
+
+        return () => {
+            window.removeEventListener("scroll", handleIsInView)
+        }
+    }, [isInView, divRef, offsetDiv])
+
     return (
         <div className={styles.root}>
             <div className="container">
@@ -69,7 +107,7 @@ export default () => {
                     <div className="column is-6">
                         <div className={styles.skills}>
                             <div className={styles.titleSkills}>Skills</div>
-                            <div className={styles.skillsList}>
+                            <div className={styles.skillsList} ref={divRef}>
                                 {data.skills.map((skill, index) => (
                                     <div
                                         key={skill.name}
@@ -77,7 +115,7 @@ export default () => {
                                             index < 3 ? styles.active : ""
                                         }`}
                                         style={{
-                                            width: `${skill.amount}%`,
+                                            width: `${isInView ? skill.amount : 0}%`,
                                         }}
                                     >
                                         <div className={styles.skillName}>
