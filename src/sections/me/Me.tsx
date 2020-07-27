@@ -49,8 +49,8 @@ export default () => {
     return (
         <div className={styles.root}>
             <div className="container">
-                <div className="columns">
-                    <div className="column is-6">
+                <div className="columns is-desktop">
+                    <div className="column is-6-desktop">
                         <div className={styles.meCard}>
                             <div className={styles.headerCard}>
                                 <div className={styles.iconUser}>
@@ -108,7 +108,7 @@ export default () => {
                             </div>
                         </div>
                     </div>
-                    <div className="column is-6">
+                    <div className="column is-6-desktop">
                         <div className={styles.skills}>
                             <div className={styles.titleSkills}>Skills</div>
                             <div className={styles.skillsList} ref={divRef}>

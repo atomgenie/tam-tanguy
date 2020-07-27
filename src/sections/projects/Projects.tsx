@@ -10,8 +10,8 @@ export default () => {
 
     return (
         <div className={styles.root}>
-            <div className="columns is-widescreen">
-                <div className="column is-5">
+            <div className="columns is-multiline">
+                <div className="column is-12-tablet is-6-desktop is-5-fullhd is-5-widescreen">
                     <div
                         className={styles.left}
                         style={{ backgroundImage: `url(${background})` }}

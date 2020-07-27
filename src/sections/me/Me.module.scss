@@ -39,6 +39,7 @@
 
 .messageTag {
     background-color: $primary;
+    white-space: nowrap;
     color: white;
     margin-right: 10px;
     border-radius: 999px;
@@ -59,10 +60,17 @@
 .meCard {
     @extend .shadow;
     border: 1px solid transparentize($color: $primary, $amount: 0.9);
+
     margin: 0 20px 0 0;
     background-color: white;
     border-radius: 5px;
     overflow: hidden;
+
+    @media screen and (max-width: $tablet-max) {
+        & {
+            margin: 0;
+        }
+    }
 
     .headerCard {
         background-color: $background-soft-transparent;
@@ -93,6 +101,7 @@
         display: flex;
         align-items: flex-end;
         padding: 50px 40px 40px 35px;
+        overflow-x: scroll;
 
         .me {
             border-radius: 999px;
