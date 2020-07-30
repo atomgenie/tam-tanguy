@@ -94,6 +94,14 @@ export const data: {
             picture: pictureFolder + "pantheon.png",
         },
         {
+            name: "Fizualizer",
+            tags: ["School Project", "Personal Project", "GoLang", "React.js", "TypeScript", "Open Source", "Cloud Firestore"],
+            description:
+                "Open source project allowing to visualize data in the Cloud Firestore emulator.",
+            link: "https://github.com/atomgenie/fizualizer",
+            picture: pictureFolder + "fizualizer.png",
+        },
+        {
             name: "CryTeam",
             tags: ["School Project", "Video game", "Unity"],
             description:
