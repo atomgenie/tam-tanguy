@@ -87,7 +87,7 @@ export default () => {
                                         learning aside from my academic courses some web
                                         technologies, like Javascript with Node.js and
                                         React.js, docker, Kubernetes, web services (Google
-                                        Cloud Engine, Amazon Web Service and Microsoft
+                                        Cloud Engine, Amazon Web Services and Microsoft
                                         Azure), and other web basics (HTML, CSS, PHP,
                                         MySQL / MariaDB). At school, I teach to first-year
                                         students the basics of programming, especially in
