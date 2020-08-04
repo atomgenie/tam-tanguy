@@ -4,12 +4,20 @@ import background from "./Background.png"
 import { data } from "data"
 import { FiFolder, FiExternalLink } from "react-icons/fi"
 import { Project } from "types"
+import ImgFocus from "./img-focus/ImgFocus"
 
 export default () => {
     const [project, setProject] = useState<Project>(data.projects[0])
+    const [openFocus, setOpenFocus] = useState(false)
+    const [focusImg, setFocusImg] = useState<string | undefined>()
 
     return (
         <div className={styles.root}>
+            <ImgFocus
+                isOpen={openFocus}
+                imgUrl={focusImg}
+                onClose={() => setOpenFocus(false)}
+            />
             <div className="columns is-multiline">
                 <div className="column is-12-tablet is-6-desktop is-5-fullhd is-5-widescreen">
                     <div
@@ -53,6 +61,10 @@ export default () => {
                                         <img
                                             src={project.picture}
                                             alt={`${project.name} illustration`}
+                                            onClick={() => {
+                                                setFocusImg(project.picture)
+                                                setOpenFocus(true)
+                                            }}
                                         />
                                     </div>
                                 )}
