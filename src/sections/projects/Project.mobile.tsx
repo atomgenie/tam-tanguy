@@ -9,13 +9,14 @@ import { useDrag } from "react-use-gesture"
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
 
 const trigger = 80
+const maxElements = 2
 
 export default () => {
     const [position, setPosition] = useState(0)
     const [showTips, setShowTips] = useState(true)
     const [springs, set] = useSprings(data.projects.length, index => ({
-        top: index === 0 ? 0 : index * 30,
-        scale: `scale(${1 - index * 0.1})`,
+        top: index < maxElements + 1 ? index * 30 : 0,
+        scale: index < maxElements + 1 ? `scale(${1 - index * 0.1})` : `scale(1)`,
         opacity: index < 2 ? 1 : 0,
         x: 0,
     }))
@@ -98,12 +99,17 @@ export default () => {
         }
         set(index => {
             const currentPosition = index - position
+            const shouldHandleAnimation =
+                currentPosition >= -1 && currentPosition < maxElements + 1
 
             return {
-                top: currentPosition === 0 ? 0 : currentPosition * 30,
-                scale: `scale(${1 - currentPosition * 0.1})`,
-                opacity: currentPosition >= 0 && currentPosition < 2 ? 1 : 0,
-                x: currentPosition >= 0 && currentPosition <= 1 ? 0 : undefined,
+                top: shouldHandleAnimation ? currentPosition * 30 : 0,
+                scale: shouldHandleAnimation
+                    ? `scale(${1 - currentPosition * 0.1})`
+                    : `scale(1)`,
+                opacity: currentPosition >= 0 && currentPosition < maxElements ? 1 : 0,
+                x: currentPosition >= 0 && currentPosition < maxElements ? 0 : undefined,
+                display: shouldHandleAnimation ? "block" : "none",
             }
         })
     }, [position, set])
