@@ -1,6 +1,6 @@
 export interface Project {
     name: string
-    tags: string[]
+    tags: readonly string[]
     description: string
     link?: string
     picture?: string

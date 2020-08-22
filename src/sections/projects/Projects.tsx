@@ -5,11 +5,16 @@ import { data } from "data"
 import { FiFolder, FiExternalLink } from "react-icons/fi"
 import { Project } from "types"
 import ImgFocus from "./img-focus/ImgFocus"
+import ProjectMobile from "./Project.mobile"
 
 export default () => {
     const [project, setProject] = useState<Project>(data.projects[0])
     const [openFocus, setOpenFocus] = useState(false)
     const [focusImg, setFocusImg] = useState<string | undefined>()
+
+    if (window.innerWidth <= 1023) {
+        return <ProjectMobile />
+    }
 
     return (
         <div className={styles.root}>

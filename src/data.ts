@@ -3,8 +3,8 @@ import { Project } from "./types"
 const pictureFolder = process.env.PUBLIC_URL + "/pictures/"
 
 export const data: {
-    skills: { name: string; amount: number }[]
-    projects: Project[]
+    skills: readonly { name: string; amount: number }[]
+    projects: readonly Project[]
 } = {
     skills: [
         {
@@ -51,7 +51,7 @@ export const data: {
             name: "Terraform",
             amount: 40,
         },
-    ],
+    ] as const,
     projects: [
         {
             name: "Nectar",
@@ -95,7 +95,15 @@ export const data: {
         },
         {
             name: "Fizualizer",
-            tags: ["School Project", "Personal Project", "GoLang", "React.js", "TypeScript", "Open Source", "Cloud Firestore"],
+            tags: [
+                "School Project",
+                "Personal Project",
+                "GoLang",
+                "React.js",
+                "TypeScript",
+                "Open Source",
+                "Cloud Firestore",
+            ],
             description:
                 "Open source project allowing to visualize data in the Cloud Firestore emulator.",
             link: "https://github.com/atomgenie/fizualizer",
@@ -132,5 +140,5 @@ export const data: {
             description:
                 "Second-year project. Program that aim to recognize printed characters",
         },
-    ],
-}
+    ] as const,
+} as const

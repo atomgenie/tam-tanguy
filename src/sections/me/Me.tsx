@@ -8,7 +8,7 @@ export default () => {
     const divRef = useRef<HTMLDivElement>(null)
 
     const orderedSkills = useMemo(() => {
-        return data.skills.sort((a, b) => b.amount - a.amount)
+        return [...data.skills].sort((a, b) => b.amount - a.amount)
     }, [])
 
     const offsetDiv = useMemo(() => {
