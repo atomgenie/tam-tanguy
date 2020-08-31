@@ -3,6 +3,14 @@ import styles from "./Me.module.scss"
 import { FiUser, FiSend } from "react-icons/fi"
 import { data } from "data"
 
+const SpecialLink: React.FC<{ href?: string }> = ({ href, children }) => {
+    return (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+            {children}
+        </a>
+    )
+}
+
 export default () => {
     const [isInView, setIsInView] = useState(false)
     const divRef = useRef<HTMLDivElement>(null)
@@ -80,18 +88,36 @@ export default () => {
                                         </div>
                                     </div>
                                     <div className={styles.messageBottom}>
-                                        I'm a student at EPITA, a french engineering and
-                                        computer science focused school. I'm highly
-                                        interested in artificial intelligence, such as
-                                        deep learning and neural networks and I am
-                                        learning aside from my academic courses some web
-                                        technologies, like Javascript with Node.js and
-                                        React.js, docker, Kubernetes, web services (Google
-                                        Cloud Engine, Amazon Web Services and Microsoft
-                                        Azure), and other web basics (HTML, CSS, PHP,
-                                        MySQL / MariaDB). At school, I teach to first-year
-                                        students the basics of programming, especially in
-                                        OCaml and C#.
+                                        I'm a student at{" "}
+                                        <SpecialLink href="https://www.epita.fr/">
+                                            EPITA
+                                        </SpecialLink>{" "}
+                                        , a french engineering and computer science
+                                        focused school. I'm part of the{" "}
+                                        <SpecialLink href="https://www.epita.fr/nos-formations/diplome-ingenieur/cycle-ingenieur/les-majeures/#majeure-MTI">
+                                            MTI
+                                        </SpecialLink>{" "}
+                                        class. I'm learning at school programing and
+                                        algorithms basics to advanced concepts in web
+                                        technologies, C / C++, Linux, AI... <br />
+                                        Aside from my academic courses I'm learning some
+                                        web technologies, like TypeScript / JavaScript
+                                        with Node.js, React.js and Vue.js, Docker,
+                                        Kubernetes, cloud providers (Google Cloud Engine,
+                                        Amazon Web Services and Microsoft Azure), and
+                                        other web basics (HTML, CSS, PHP, MySQL / MariaDB,
+                                        MongoDB).
+                                        <br />
+                                        During my third year, I taught first-year students
+                                        the basics of programming, particularly in OCaml
+                                        and C#.
+                                        <br />
+                                        I'm working as a freelancer aside of EPITA for{" "}
+                                        <SpecialLink href="https://makemereach.com/">
+                                            MakeMeReach
+                                        </SpecialLink>
+                                        , the company where I did my fourth year
+                                        insternship.
                                     </div>
                                 </div>
                             </div>
