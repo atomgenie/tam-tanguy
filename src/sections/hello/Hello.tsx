@@ -28,6 +28,9 @@ export default () => {
                                     <div className={styles.dot} />
                                     <div className={styles.dot} />
                                 </div>
+                                <div className={styles.messageDoNotWait}>
+                                    I think you should scroll :-)
+                                </div>
                             </div>
                         </div>
                     </div>

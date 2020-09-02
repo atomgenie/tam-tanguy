@@ -88,24 +88,34 @@
                     opacity: 0;
                     border-radius: 25px 25px 25px 25px;
                 }
-                50% {
+                10% {
                     transform: translateY(100%);
                     padding: 5px 40px 5px 20px;
                     font-size: 1.4rem;
                     opacity: 1;
                     border-radius: 25px 25px 25px 25px;
                 }
-                100% {
+                20% {
                     transform: translateY(0%);
+                    border-radius: 25px 25px 25px 5px;
+                }
+                70% {
+                    border-radius: 25px 25px 25px 5px;
+                }
+                80% {
+                    border-radius: 25px 25px 25px 25px;
+                }
+                90% {
                     border-radius: 25px 25px 25px 5px;
                 }
             }
 
             @extend .message;
+            align-self: flex-start;
             text-transform: uppercase;
             padding-right: 40px;
             border-radius: 25px 25px 25px 5px;
-            animation: topIn 2s;
+            animation: topIn 12s;
         }
 
         .messageBottom {
@@ -114,24 +124,51 @@
                     padding: 0px 0px 0px 0px;
                     font-size: 0.6rem;
                     opacity: 0;
+                    min-height: 35px;
+                    height: initial;
                 }
-                50% {
+                10% {
                     padding: 0px 0px 0px 0px;
                     font-size: 0.6rem;
                     opacity: 0;
                 }
-                100% {
+                20% {
                     padding: 5px 20px 5px 20px;
                     font-size: 1.4rem;
-                    opacity: 1s;
+                    opacity: 1;
+                }
+                60% {
+                    padding: 5px 20px 5px 20px;
+                    font-size: 1.4rem;
+                    opacity: 1;
+                }
+                70% {
+                    padding: 0px 0px 0px 0px;
+                    font-size: 0.6rem;
+                    opacity: 0;
+                    min-height: 35px;
+                    height: initial;
+                }
+                80% {
+                    padding: 0px 0px 0px 0px;
+                    font-size: 0.6rem;
+                    opacity: 0;
+                    height: 0;
+                    min-height: 0;
                 }
             }
 
             @extend .message;
+            height: 0;
+            min-height: 0;
             margin-top: 5px;
             border-radius: 5px 25px 25px 25px;
             align-self: flex-start;
-            animation: bottomIn 2s;
+            animation: bottomIn 12s;
+
+            padding: 0px 0px 0px 0px;
+            font-size: 0.6rem;
+            opacity: 0;
 
             .dot {
                 @keyframes dotAnim {
@@ -171,6 +208,45 @@
                     animation: dotAnim 4s normal 0.4s infinite;
                 }
             }
+        }
+
+        .messageDoNotWait {
+            @extend .message;
+
+            @keyframes doNotWaitAnim {
+                0% {
+                    padding: 0px 0px 0px 0px;
+                    font-size: 0.6rem;
+                    opacity: 0;
+                    height: 0;
+                    min-height: 0;
+                }
+                80% {
+                    padding: 0px 0px 0px 0px;
+                    font-size: 0.6rem;
+                    opacity: 0;
+                    height: 0;
+                    min-height: 0;
+                }
+                90% {
+                    padding: 0px 0px 0px 0px;
+                    font-size: 0.6rem;
+                    opacity: 0;
+                    height: initial;
+                    min-height: 35px;
+                }
+                100% {
+                    padding: 5px 20px 5px 20px;
+                    font-size: 1.4rem;
+                    opacity: 1s;
+                }
+            }
+
+            border-radius: 5px 25px 25px 25px;
+            align-self: flex-start;
+            padding-right: 40px;
+            font-weight: 300;
+            animation: doNotWaitAnim 12s;
         }
     }
 }
