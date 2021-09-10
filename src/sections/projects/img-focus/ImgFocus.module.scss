@@ -1,49 +1,49 @@
 @import "styles/globals.scss";
 
 .root {
-    position: fixed;
-    z-index: 3;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    height: 100vh;
-    max-height: 100vh;
-    padding: 100px 20px;
-    display: flex;
-    overflow-y: scroll;
-    justify-content: center;
-    align-items: flex-start;
-    cursor: pointer;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100vh;
+  max-height: 100vh;
+  padding: 100px 20px;
+  display: flex;
+  overflow-y: scroll;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
 }
 
 .content {
-    max-width: 1000px;
-    position: relative;
-    cursor: initial;
+  max-width: 1000px;
+  position: relative;
+  cursor: initial;
 }
 
 .closeButton {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    width: 15px;
-    height: 15px;
-    background-color: rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    border-radius: 999px;
-    color: white;
-    font-size: 10px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border-radius: 999px;
+  color: white;
+  font-size: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }
 
 .imgContent {
-    border-radius: 20px;
+  border-radius: 20px;
 }
