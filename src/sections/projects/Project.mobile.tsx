@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import styles from "./Projects_mobile.module.scss"
 
 import { a, useSprings } from "react-spring"
 
@@ -7,11 +6,65 @@ import CardMobile from "./card-mobile/CardMobile"
 import { data } from "data"
 import { useDrag } from "react-use-gesture"
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
+import styled, { css } from "styled-components"
+import { backgroundSoft, primary } from "styles/globals"
 
 const trigger = 80
 const maxElements = 2
 
-export default () => {
+const StyledRoot = styled.div`
+  padding: 50px 50px;
+  overflow-x: hidden;
+  max-width: 100vw;
+`
+
+const StyledTitle = styled.div`
+  color: ${primary};
+  font-weight: 800;
+  font-size: 1.2rem;
+`
+
+const StyledNavigation = styled.div`
+  position: relative;
+  height: 50px;
+  margin-top: 40px;
+  display: flex;
+`
+
+const btnBaseStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  outline: none;
+  border-radius: 999px;
+  border: none;
+  background-color: ${backgroundSoft};
+  color: ${primary};
+
+  &:hover {
+    background-color: ${primary};
+    color: white;
+  }
+`
+
+const StyledBtnNext = styled.button`
+  ${btnBaseStyles}
+  margin-left: 15px;
+`
+
+const StyledBtnPrev = styled.button`
+  ${btnBaseStyles}
+`
+
+const StyledProjects = styled.div`
+  position: relative;
+  height: 500px;
+  margin-top: 40px;
+`
+
+const ProjectMobile = () => {
   const [position, setPosition] = useState(0)
   const [showTips, setShowTips] = useState(true)
   const [springs, set] = useSprings(data.projects.length, index => ({
@@ -113,18 +166,18 @@ export default () => {
   }, [position, set])
 
   return (
-    <div className={styles.root}>
+    <StyledRoot>
       <div className="container">
-        <div className={styles.title}>Projects</div>
-        <div className={styles.navigation}>
-          <button onClick={() => setPosition(position - 1)} className={styles.btnPrev}>
+        <StyledTitle>Projects</StyledTitle>
+        <StyledNavigation>
+          <StyledBtnPrev onClick={() => setPosition(position - 1)}>
             <FiArrowLeft />
-          </button>
-          <button onClick={() => setPosition(position + 1)} className={styles.btnNext}>
+          </StyledBtnPrev>
+          <StyledBtnNext onClick={() => setPosition(position + 1)}>
             <FiArrowRight />
-          </button>
-        </div>
-        <div className={styles.projects}>
+          </StyledBtnNext>
+        </StyledNavigation>
+        <StyledProjects>
           {data.projects.map((project, pos) => {
             const currentPosition = pos - position
             const isVisible = currentPosition >= 0 && currentPosition < 2
@@ -140,15 +193,17 @@ export default () => {
                   transform: springs[pos].scale,
                   pointerEvents: isVisible ? "initial" : "none",
                   x: springs[pos].x,
+                  position: "absolute",
                 }}
-                className={styles.projectContainer}
               >
                 <CardMobile project={project} />
               </a.div>
             )
           })}
-        </div>
+        </StyledProjects>
       </div>
-    </div>
+    </StyledRoot>
   )
 }
+
+export default ProjectMobile
