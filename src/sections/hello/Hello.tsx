@@ -261,7 +261,7 @@ const Hello = () => {
             <h1>
               Tâm-Tanguy <span className="lastname">TRAN</span>
             </h1>
-            <div className="description">Computer Science Student</div>
+            <div className="description">Software Engineer</div>
           </StyledTitle>
           <StyledWelcome>
             <StyledHelloMessage>
@@ -276,7 +276,7 @@ const Hello = () => {
                   <StyledDot />
                 </StyledMessageBottom>
                 <StyledMessageDoNotWait>
-                  I think you should scroll :-)
+                  I think you should scroll 🙃
                 </StyledMessageDoNotWait>
               </StyledMessages>
             </StyledHelloMessage>
