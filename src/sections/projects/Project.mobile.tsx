@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 
-import { a, useSprings } from "react-spring"
+import { a, useSprings } from "@react-spring/web"
 
 import CardMobile from "./card-mobile/CardMobile"
 import { data } from "data"
-import { useDrag } from "react-use-gesture"
+import { useDrag } from "@use-gesture/react"
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
 import styled, { css } from "styled-components"
 import { backgroundSoft, primary } from "styles/globals"
@@ -80,7 +80,7 @@ const ProjectMobile = () => {
     }
 
     const tipsInterval = setInterval(async () => {
-      await set(index => {
+      await set.start(index => {
         if (index === 0) {
           return {
             x: 70,
@@ -89,7 +89,7 @@ const ProjectMobile = () => {
           return {}
         }
       })
-      set(index => {
+      set.start(index => {
         if (index === 0) {
           return {
             x: 0,
@@ -150,7 +150,7 @@ const ProjectMobile = () => {
     if (position !== 0) {
       setShowTips(false)
     }
-    set(index => {
+    set.start(index => {
       const currentPosition = index - position
       const shouldHandleAnimation =
         currentPosition >= -1 && currentPosition < maxElements + 1
@@ -194,6 +194,7 @@ const ProjectMobile = () => {
                   pointerEvents: isVisible ? "initial" : "none",
                   x: springs[pos].x,
                   position: "absolute",
+                  touchAction: "none",
                 }}
               >
                 <CardMobile project={project} />
