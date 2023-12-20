@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react"
+import React, { useEffect, useState, useRef, useMemo, ReactNode } from "react"
 import { FiUser, FiSend } from "react-icons/fi"
 import { data } from "data"
 import styled, { css } from "styled-components"
@@ -156,28 +156,36 @@ const inputHeight = 35
 const StyledInputDiv = styled.div`
   position: relative;
 
-  > input {
+  input,
+  textarea {
     background-color: white;
     outline: none;
     border: 1px solid rgba(0, 93, 169, 0.1);
     width: 100%;
     padding: 3px 15px;
-    border-radius: 999px;
+    border-radius: 17.5px;
     height: ${inputHeight}px;
+    min-height: ${inputHeight}px;
+    margin-top: 5px;
+  }
+
+  textarea {
+    padding: 9px 15px;
+    max-width: 100%;
+    min-width: 100%;
+    height: ${2 * inputHeight}px;
   }
 `
 
 const StyledSendContainer = styled.div`
-  position: absolute;
-  height: ${inputHeight}px;
-  right: 5px;
-  top: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 `
 
-const StyledSend = styled.div`
+const StyledSend = styled.button`
+  display: block;
+  border: 0;
   color: white;
   background-color: ${primary};
   line-height: 1;
@@ -338,15 +346,27 @@ const Me = () => {
                 </StyledMessages>
               </StyledContentCard>
               <StyledFooterCard>
-                <StyledInputDiv>
-                  <input type="text" autoComplete="false" />
-                  <StyledSendContainer>
-                    <StyledSend>
-                      <StyledMessageSend>Send</StyledMessageSend>
-                      <FiSend />
-                    </StyledSend>
-                  </StyledSendContainer>
-                </StyledInputDiv>
+                <form
+                  method="POST"
+                  name="fa-form-1"
+                  action="https://webhook.frontapp.com/forms/sean_test_3_30/UP11od99tgc3bLn3olHRtBQzVOks1SUHHzYrmkN4XgZajeRRVgkXfpCJH50vwrfOOHPrxjeF9pG5p49a0M3T3ibr6jPRKdro-HuS-tPOecG_T1X-FkQ"
+                  encType="multipart/form-data"
+                  accept-charset="utf-8"
+                >
+                  <StyledInputDiv>
+                    <input type="text" name="name" placeholder="Name" />
+                    <input type="email" name="email" placeholder="Email" />
+                    <textarea name="body" placeholder="Message"></textarea>
+
+                    <div id="html_element"></div>
+                    <StyledSendContainer>
+                      <StyledSend type="submit">
+                        <StyledMessageSend>Send</StyledMessageSend>
+                        <FiSend />
+                      </StyledSend>
+                    </StyledSendContainer>
+                  </StyledInputDiv>
+                </form>
               </StyledFooterCard>
             </StyledMeCard>
           </div>
@@ -374,7 +394,10 @@ const Me = () => {
   )
 }
 
-const SpecialLink: React.FC<{ href?: string }> = ({ href, children }) => {
+const SpecialLink: React.FC<{ href?: string; children: ReactNode }> = ({
+  href,
+  children,
+}) => {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
       {children}
