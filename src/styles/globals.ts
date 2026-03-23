@@ -2,7 +2,7 @@ import { css } from "styled-components"
 
 // Colors
 export const colorBg = "#FFFFFF"
-export const colorBorder = "#D4D4D4"
+export const colorBorder = "#EDE8FD"
 export const colorText = "#0F0F0F"
 export const colorTextMuted = "#6B6B6B"
 export const colorAccent = "#6E56CF"
