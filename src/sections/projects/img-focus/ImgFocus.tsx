@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 import { useDetectClickOutside } from "helpers/hooks"
 import { FiX } from "react-icons/fi"
 import styled from "styled-components"
+import { colorBg, colorAccent, transitionBase } from "styles/globals"
 
 interface props {
   imgUrl?: string
@@ -15,10 +16,10 @@ const StyledRoot = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   height: 100vh;
   max-height: 100vh;
-  padding: 100px 20px;
+  padding: 80px 20px;
   display: flex;
   overflow-y: scroll;
   justify-content: center;
@@ -34,27 +35,29 @@ const StyledContent = styled.div`
 
 const StyledCloseButton = styled.div`
   position: absolute;
-  right: 15px;
-  top: 15px;
-  width: 15px;
-  height: 15px;
-  background-color: rgba(0, 0, 0, 0.2);
+  right: 0;
+  top: -40px;
+  width: 32px;
+  height: 32px;
+  background-color: ${colorAccent};
+  border: 1px solid ${colorAccent};
   cursor: pointer;
-  border-radius: 999px;
-  color: white;
-  font-size: 10px;
-  text-align: center;
+  color: ${colorBg};
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color ${transitionBase}, color ${transitionBase};
+  z-index: 1;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: transparent;
+    color: ${colorAccent};
   }
 `
 
 const StyledImgContent = styled.img`
-  border-radius: 20px;
+  display: block;
+  max-width: 100%;
 `
 
 const ImgFocus: React.FC<props> = ({ imgUrl, isOpen, onClose }) => {

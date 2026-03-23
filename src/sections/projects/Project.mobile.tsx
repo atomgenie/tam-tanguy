@@ -7,61 +7,87 @@ import { data } from "data"
 import { useDrag } from "@use-gesture/react"
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
 import styled, { css } from "styled-components"
-import { backgroundSoft, primary } from "styles/globals"
+import {
+  colorBg,
+  colorBorder,
+  colorText,
+  colorAccent,
+  containerStyles,
+  space2,
+  space3,
+  space5,
+  transitionBase,
+} from "styles/globals"
 
 const trigger = 80
 const maxElements = 2
 
 const StyledRoot = styled.div`
-  padding: 50px 50px;
+  padding: ${space5} 0;
   overflow-x: hidden;
   max-width: 100vw;
+  background-color: ${colorBg};
+`
+
+const StyledContainer = styled.div`
+  ${containerStyles}
+`
+
+const StyledLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: ${space2};
 `
 
 const StyledTitle = styled.div`
-  color: ${primary};
+  color: ${colorText};
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 `
 
 const StyledNavigation = styled.div`
   position: relative;
   height: 50px;
-  margin-top: 40px;
+  margin-top: ${space3};
   display: flex;
+  gap: ${space2};
 `
 
 const btnBaseStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
+  height: 36px;
+  width: 36px;
   outline: none;
-  border-radius: 999px;
-  border: none;
-  background-color: ${backgroundSoft};
-  color: ${primary};
+  border: 1px solid ${colorBorder};
+  background-color: ${colorBg};
+  color: ${colorText};
+  cursor: pointer;
+  transition: background-color ${transitionBase}, color ${transitionBase}, border-color ${transitionBase};
 
   &:hover {
-    background-color: ${primary};
-    color: white;
+    background-color: ${colorAccent};
+    color: ${colorBg};
+    border-color: ${colorAccent};
   }
-`
-
-const StyledBtnNext = styled.button`
-  ${btnBaseStyles}
-  margin-left: 15px;
 `
 
 const StyledBtnPrev = styled.button`
   ${btnBaseStyles}
 `
 
+const StyledBtnNext = styled.button`
+  ${btnBaseStyles}
+`
+
 const StyledProjects = styled.div`
   position: relative;
   height: 500px;
-  margin-top: 40px;
+  margin-top: ${space5};
 `
 
 const ProjectMobile = () => {
@@ -167,7 +193,8 @@ const ProjectMobile = () => {
 
   return (
     <StyledRoot>
-      <div className="container">
+      <StyledContainer>
+        <StyledLabel>Work</StyledLabel>
         <StyledTitle>Projects</StyledTitle>
         <StyledNavigation>
           <StyledBtnPrev onClick={() => setPosition(position - 1)}>
@@ -202,7 +229,7 @@ const ProjectMobile = () => {
             )
           })}
         </StyledProjects>
-      </div>
+      </StyledContainer>
     </StyledRoot>
   )
 }

@@ -1,395 +1,324 @@
 import React, { useEffect, useState, useRef, useMemo, ReactNode } from "react"
-import { FiUser, FiSend } from "react-icons/fi"
+import { FiSend } from "react-icons/fi"
 import { data } from "data"
-import styled, { css } from "styled-components"
+import { useSprings, a } from "@react-spring/web"
+import styled from "styled-components"
 import {
-  backgroundSoft,
-  backgroundSoftTransparent,
-  primary,
-  shadow,
-  shadow05,
+  colorBg,
+  colorBorder,
+  colorText,
+  colorTextMuted,
+  colorAccent,
+  containerStyles,
+  space2,
+  space3,
+  space4,
+  space5,
+  space6,
+  transitionBase,
   tabletMax,
 } from "styles/globals"
 
-const StyledRoot = styled.div`
-  background-color: ${backgroundSoftTransparent};
-  padding: 140px 10px;
+const StyledRoot = styled.section`
+  background-color: ${colorBg};
+  padding: ${space6} 0;
+  border-top: 1px solid ${colorBorder};
+  border-bottom: 1px solid ${colorBorder};
 `
 
-const StyledMeCard = styled.div`
-  ${shadow}
-  border: 1px solid transparentize($color: $primary, $amount: 0.9);
-  margin: 0 20px 0 0;
-  background-color: white;
-  border-radius: 5px;
-  overflow: hidden;
+const StyledContainer = styled.div`
+  ${containerStyles}
+`
+
+const StyledGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${space6};
 
   @media screen and (max-width: ${tabletMax}) {
-    margin: 0;
+    grid-template-columns: 1fr;
+    gap: ${space5};
   }
 `
 
-const StyledHeaderCard = styled.div`
-  background-color: ${backgroundSoftTransparent};
-  height: 80px;
-  display: flex;
-  align-items: center;
-  padding: 10px 30px;
-  border-bottom: 1px solid rgba(0, 93, 169, 0.1);
-`
-
-const StyledIconUser = styled.div`
-  margin-right: 30px;
-  font-size: 30px;
-  color: ${primary};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const StyledTitleUser = styled.div`
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: ${primary};
-`
-
-const StyledContentCard = styled.div`
-  background-color: white;
-  display: flex;
-  align-items: flex-end;
-  padding: 50px 40px 40px 35px;
-  overflow-x: scroll;
-`
-
-const StyledMe = styled.div`
-  border-radius: 999px;
-  background-color: ${primary};
-  padding: 5px;
-`
-
-const meSize = "35px"
-
-const StyledMeInside = styled.div`
-  border-radius: 999px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: ${meSize};
-  width: ${meSize};
-  color: ${primary};
-  font-weight: 800;
-  font-size: 1.1rem;
-`
-
-const StyledMessages = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 30px;
-`
-
-const messageStyles = css`
-  background-color: ${backgroundSoft};
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  min-height: 35px;
-  display: flex;
-  align-items: center;
-`
-
-const StyledMessageTop = styled.div`
-  ${messageStyles}
+const StyledLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: ${colorTextMuted};
   text-transform: uppercase;
-  padding-right: 40px;
-  border-radius: 25px 25px 25px 5px;
-  color: $primary;
+  letter-spacing: 0.1em;
+  margin-bottom: ${space2};
+`
+
+const StyledHeading = styled.h2`
+  font-size: 1.8rem;
   font-weight: 800;
+  color: ${colorText};
+  margin: 0 0 ${space4} 0;
 `
 
-const StyledMessageMiddle = styled.div`
-  ${messageStyles}
-  margin-top: 5px;
-  border-radius: 5px 25px 25px 5px;
-`
-
-const StyledMessageBottom = styled.div`
-  ${messageStyles}
-  display: block;
-  margin-top: 5px;
-  border-radius: 5px 25px 25px 25px;
-  align-self: flex-start;
+const StyledBio = styled.div`
+  color: ${colorTextMuted};
+  line-height: 1.8;
+  font-size: 1rem;
 
   a {
-    color: ${primary};
+    color: ${colorAccent};
+    text-decoration: none;
     font-weight: 800;
 
     &:hover {
       text-decoration: underline;
-      color: ${primary};
     }
   }
 `
 
-const StyledMessageTag = styled.div`
-  background-color: ${primary};
-  white-space: nowrap;
-  color: white;
-  margin-right: 10px;
-  border-radius: 999px;
-  padding: 2px 10px;
+const StyledBioParagraph = styled.p`
+  margin: 0 0 ${space3} 0;
 
   &:last-child {
-    margin-right: 0;
+    margin-bottom: 0;
   }
 `
 
-const StyledFooterCard = styled.div`
-  background-color: ${backgroundSoftTransparent};
-  padding: 20px 40px;
-  border-top: 1px solid rgba(0, 93, 169, 0.1);
+const StyledDivider = styled.div`
+  border: none;
+  border-top: 1px solid ${colorBorder};
+  margin: ${space5} 0;
 `
 
-const inputHeight = 35
-
-const StyledInputDiv = styled.div`
-  position: relative;
-
-  input,
-  textarea {
-    background-color: white;
-    outline: none;
-    border: 1px solid rgba(0, 93, 169, 0.1);
-    width: 100%;
-    padding: 3px 15px;
-    border-radius: 17.5px;
-    height: ${inputHeight}px;
-    min-height: ${inputHeight}px;
-    margin-top: 5px;
-  }
-
-  textarea {
-    padding: 9px 15px;
-    max-width: 100%;
-    min-width: 100%;
-    height: ${2 * inputHeight}px;
-  }
-`
-
-const StyledSendContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`
-
-const StyledSend = styled.button`
+const StyledFormLabel = styled.label`
   display: block;
-  border: 0;
-  color: white;
-  background-color: ${primary};
-  line-height: 1;
-  height: ${inputHeight - 10}px;
+  font-size: 0.85rem;
+  color: ${colorTextMuted};
+  margin-bottom: 6px;
+`
+
+const StyledFormGroup = styled.div`
+  margin-bottom: ${space3};
+`
+
+const inputStyles = `
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #D4D4D4;
+  border-radius: 0;
+  background-color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #0F0F0F;
+  outline: none;
+  transition: border-color 0.2s ease;
+  appearance: none;
+
+  &:focus {
+    border-color: #6E56CF;
+  }
+
+  &::placeholder {
+    color: #6B6B6B;
+  }
+`
+
+const StyledInput = styled.input`
+  ${inputStyles}
+`
+
+const StyledTextarea = styled.textarea`
+  ${inputStyles}
+  resize: vertical;
+  min-height: 100px;
+`
+
+const StyledSubmitButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: ${space2};
+  padding: 10px 20px;
+  background-color: ${colorAccent};
+  color: ${colorBg};
+  border: 1px solid ${colorAccent};
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color ${transitionBase}, color ${transitionBase};
+
+  &:hover {
+    background-color: transparent;
+    color: ${colorAccent};
+  }
+`
+
+// Skills
+const StyledSkillsColumn = styled.div``
+
+const StyledSkillGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: ${space4};
+`
+
+const StyledSkillRow = styled.div`
   display: flex;
   align-items: center;
-  border-radius: 999px;
-  padding: 2px 10px;
-`
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid ${colorBorder};
 
-const StyledMessageSend = styled.div`
-  margin-right: 10px;
-`
-
-const StyledSkills = styled.div`
-  padding: 20px 10px;
-`
-
-const StyledTitleSkills = styled.div`
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: ${primary};
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
 `
 
 const StyledSkillName = styled.div`
-  background-color: ${backgroundSoft};
-  border-radius: 999px;
-  padding: 2px 15px;
-  color: ${primary};
+  font-size: 1rem;
+  color: ${colorText};
+  flex: 1;
 `
 
-const StyledSkillsList = styled.div`
+const StyledDots = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 20px 0;
-`
-
-const StyledSkillItem = styled.div`
-  ${shadow05}
-  border-radius: 999px;
-  background-color: white;
-  margin-top: 10px;
-  padding: 5px 7px;
-  display: flex;
+  gap: 5px;
   align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-  transition: width 1.5s;
-  white-space: nowrap;
-  border: 1px solid rgba(0, 93, 169, 0.1);
+`
 
-  &:first-child {
-    margin-top: 0;
-  }
+interface DotProps {
+  $filled: boolean
+}
 
-  &.active {
-    background-color: ${primary};
-
-    ${StyledSkillName} {
-      color: white;
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  }
+const StyledDot = styled(a.div)<DotProps>`
+  width: 8px;
+  height: 8px;
+  background-color: ${({ $filled }) => ($filled ? colorAccent : colorBorder)};
 `
 
 const Me = () => {
-  const [isInView, setIsInView] = useState(false)
-  const divRef = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+  const skillsRef = useRef<HTMLDivElement>(null)
 
   const orderedSkills = useMemo(() => {
     return [...data.skills].sort((a, b) => b.amount - a.amount)
   }, [])
 
-  const offsetDiv = useMemo(() => {
-    let offsetDiv = 0
-    let elementTop: any = divRef.current
-
-    while (elementTop) {
-      offsetDiv += elementTop.offsetTop
-      elementTop = elementTop.offsetParent
-    }
-    return offsetDiv || 1000
-  }, [divRef])
-
   useEffect(() => {
-    if (isInView) {
-      return
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true)
+      },
+      { threshold: 0.2 },
+    )
+    if (skillsRef.current) observer.observe(skillsRef.current)
+    return () => observer.disconnect()
+  }, [])
 
-    const handleIsInView = () => {
-      if (!divRef.current) {
-        return
-      }
-      const scrollPosition = window.scrollY + (window.innerHeight - 300)
-
-      if (offsetDiv < scrollPosition) {
-        setIsInView(true)
-      }
-    }
-
-    handleIsInView()
-    window.addEventListener("scroll", handleIsInView, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", handleIsInView)
-    }
-  }, [isInView, divRef, offsetDiv])
+  const dotSprings = useSprings(
+    orderedSkills.length,
+    orderedSkills.map((skill, index) => ({
+      opacity: inView ? 1 : 0,
+      delay: inView ? index * 60 : 0,
+      config: { tension: 200, friction: 25 },
+    })),
+  )
 
   return (
     <StyledRoot>
-      <div className="container">
-        <div className="columns is-desktop">
-          <div className="column is-6-desktop">
-            <StyledMeCard>
-              <StyledHeaderCard>
-                <StyledIconUser>
-                  <FiUser />
-                </StyledIconUser>
-                <StyledTitleUser>Who am I?</StyledTitleUser>
-              </StyledHeaderCard>
-              <StyledContentCard>
-                <StyledMe>
-                  <StyledMeInside>TT</StyledMeInside>
-                </StyledMe>
-                <StyledMessages>
-                  <StyledMessageTop>Tâm-Tanguy Tran</StyledMessageTop>
-                  <StyledMessageMiddle>
-                    <StyledMessageTag>French student</StyledMessageTag>
-                    <StyledMessageTag>Computer science</StyledMessageTag>
-                  </StyledMessageMiddle>
-                  <StyledMessageMiddle>
-                    <StyledMessageTag>EPITA School</StyledMessageTag>
-                  </StyledMessageMiddle>
-                  <StyledMessageBottom>
-                    I'm a student at{" "}
-                    <SpecialLink href="https://www.epita.fr/">EPITA</SpecialLink> , a
-                    french engineering and computer science focused school. I'm part of
-                    the{" "}
-                    <SpecialLink href="https://www.epita.fr/nos-formations/diplome-ingenieur/cycle-ingenieur/les-majeures/#majeure-MTI">
-                      MTI
-                    </SpecialLink>{" "}
-                    class. I'm learning at school programing and algorithms basics to
-                    advanced concepts in web technologies, C / C++, Linux, AI... <br />
-                    Aside from my academic courses I'm learning some web technologies,
-                    like TypeScript / JavaScript with Node.js, React.js and Vue.js,
-                    Docker, Kubernetes, cloud providers (Google Cloud Engine, Amazon Web
-                    Services and Microsoft Azure), and other web basics (HTML, CSS, PHP,
-                    MySQL / MariaDB, MongoDB).
-                    <br />
-                    During my third year, I taught first-year students the basics of
-                    programming, particularly in OCaml and C#.
-                    <br />
-                    I'm working as a freelancer aside of EPITA for{" "}
-                    <SpecialLink href="https://makemereach.com/">MakeMeReach</SpecialLink>
-                    , the company where I did my fourth year insternship.
-                  </StyledMessageBottom>
-                </StyledMessages>
-              </StyledContentCard>
-              <StyledFooterCard>
-                <form
-                  method="POST"
-                  name="fa-form-1"
-                  action="https://webhook.frontapp.com/forms/sean_test_3_30/UP11od99tgc3bLn3olHRtBQzVOks1SUHHzYrmkN4XgZajeRRVgkXfpCJH50vwrfOOHPrxjeF9pG5p49a0M3T3ibr6jPRKdro-HuS-tPOecG_T1X-FkQ"
-                  encType="multipart/form-data"
-                  acceptCharset="utf-8"
-                >
-                  <StyledInputDiv>
-                    <input type="text" name="name" placeholder="Name" />
-                    <input type="email" name="email" placeholder="Email" />
-                    <textarea name="body" placeholder="Message"></textarea>
+      <StyledContainer>
+        <StyledGrid>
+          {/* Left column: About + Form */}
+          <div>
+            <StyledLabel>About</StyledLabel>
+            <StyledHeading>Tâm-Tanguy Tran</StyledHeading>
+            <StyledBio>
+              <StyledBioParagraph>
+                I'm a student at{" "}
+                <SpecialLink href="https://www.epita.fr/">EPITA</SpecialLink>, a French
+                engineering and computer science focused school. I'm part of the{" "}
+                <SpecialLink href="https://www.epita.fr/nos-formations/diplome-ingenieur/cycle-ingenieur/les-majeures/#majeure-MTI">
+                  MTI
+                </SpecialLink>{" "}
+                class. I'm learning programming and algorithms basics to advanced concepts
+                in web technologies, C / C++, Linux, AI&hellip;
+              </StyledBioParagraph>
+              <StyledBioParagraph>
+                Aside from my academic courses I'm learning web technologies — TypeScript
+                / JavaScript with Node.js, React.js and Vue.js, Docker, Kubernetes, cloud
+                providers (GCP, AWS, Azure), and other web basics (HTML, CSS, PHP,
+                MySQL / MariaDB, MongoDB).
+              </StyledBioParagraph>
+              <StyledBioParagraph>
+                During my third year, I taught first-year students the basics of
+                programming, particularly in OCaml and C#.
+              </StyledBioParagraph>
+              <StyledBioParagraph>
+                I'm working as a freelancer aside of EPITA for{" "}
+                <SpecialLink href="https://makemereach.com/">MakeMeReach</SpecialLink>,
+                the company where I did my fourth year internship.
+              </StyledBioParagraph>
+            </StyledBio>
 
-                    <div id="html_element"></div>
-                    <StyledSendContainer>
-                      <StyledSend type="submit">
-                        <StyledMessageSend>Send</StyledMessageSend>
-                        <FiSend />
-                      </StyledSend>
-                    </StyledSendContainer>
-                  </StyledInputDiv>
-                </form>
-              </StyledFooterCard>
-            </StyledMeCard>
+            <StyledDivider />
+
+            <StyledLabel>Contact</StyledLabel>
+            <form
+              method="POST"
+              name="fa-form-1"
+              action="https://webhook.frontapp.com/forms/sean_test_3_30/UP11od99tgc3bLn3olHRtBQzVOks1SUHHzYrmkN4XgZajeRRVgkXfpCJH50vwrfOOHPrxjeF9pG5p49a0M3T3ibr6jPRKdro-HuS-tPOecG_T1X-FkQ"
+              encType="multipart/form-data"
+              acceptCharset="utf-8"
+            >
+              <StyledFormGroup>
+                <StyledFormLabel htmlFor="name">Name</StyledFormLabel>
+                <StyledInput type="text" id="name" name="name" placeholder="Your name" />
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <StyledFormLabel htmlFor="email">Email</StyledFormLabel>
+                <StyledInput
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="your@email.com"
+                />
+              </StyledFormGroup>
+              <StyledFormGroup>
+                <StyledFormLabel htmlFor="body">Message</StyledFormLabel>
+                <StyledTextarea id="body" name="body" placeholder="Your message" />
+              </StyledFormGroup>
+              <div id="html_element"></div>
+              <StyledSubmitButton type="submit">
+                Send
+                <FiSend />
+              </StyledSubmitButton>
+            </form>
           </div>
-          <div className="column is-6-desktop">
-            <StyledSkills>
-              <StyledTitleSkills>Skills</StyledTitleSkills>
-              <StyledSkillsList ref={divRef}>
-                {orderedSkills.map((skill, index) => (
-                  <StyledSkillItem
-                    key={skill.name}
-                    className={`${index < 3 ? "active" : ""}`}
-                    style={{
-                      width: `${isInView ? skill.amount : 0}%`,
-                    }}
-                  >
+
+          {/* Right column: Skills */}
+          <StyledSkillsColumn ref={skillsRef}>
+            <StyledLabel>Expertise</StyledLabel>
+            <StyledHeading>Skills</StyledHeading>
+            <StyledSkillGrid>
+              {orderedSkills.map((skill, index) => {
+                const filledCount = Math.round(skill.amount / 20)
+                return (
+                  <StyledSkillRow key={skill.name}>
                     <StyledSkillName>{skill.name}</StyledSkillName>
-                  </StyledSkillItem>
-                ))}
-              </StyledSkillsList>
-            </StyledSkills>
-          </div>
-        </div>
-      </div>
+                    <StyledDots>
+                      {[1, 2, 3, 4, 5].map(dot => (
+                        <StyledDot
+                          key={dot}
+                          $filled={dot <= filledCount}
+                          style={dotSprings[index]}
+                        />
+                      ))}
+                    </StyledDots>
+                  </StyledSkillRow>
+                )
+              })}
+            </StyledSkillGrid>
+          </StyledSkillsColumn>
+        </StyledGrid>
+      </StyledContainer>
     </StyledRoot>
   )
 }

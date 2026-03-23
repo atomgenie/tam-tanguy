@@ -1,51 +1,107 @@
 import React from "react"
 import { FiMail, FiLinkedin } from "react-icons/fi"
 import styled from "styled-components"
-import { backgroundSoft, primary, shadow05 } from "styles/globals"
+import {
+  colorBg,
+  colorBorder,
+  colorText,
+  colorTextMuted,
+  colorAccent,
+  containerStyles,
+  space2,
+  space3,
+  space4,
+  space5,
+  transitionBase,
+  tabletMax,
+} from "styles/globals"
 
-const StyledRoot = styled.div`
-  background-color: ${backgroundSoft};
-  padding: 50px 50px;
+const StyledRoot = styled.footer`
+  background-color: ${colorBg};
+  border-top: 1px solid ${colorBorder};
+  padding: ${space5} 0;
 `
 
-const StyledTitle = styled.div`
-  color: ${primary};
-  font-size: 1.3rem;
+const StyledContainer = styled.div`
+  ${containerStyles}
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: ${space4};
+
+  @media screen and (max-width: ${tabletMax}) {
+    flex-direction: column;
+  }
+`
+
+const StyledLeft = styled.div``
+
+const StyledLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: ${colorTextMuted};
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: ${space2};
+`
+
+const StyledHeading = styled.div`
+  font-size: 1.2rem;
   font-weight: 800;
+  color: ${colorText};
 `
 
 const StyledLinks = styled.div`
-  margin: 30px 0 0 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: ${space2};
+  align-items: flex-end;
+
+  @media screen and (max-width: ${tabletMax}) {
+    align-items: flex-start;
+  }
 `
 
 const StyledItem = styled.a`
-  ${shadow05}
-  background-color: white;
-  border-radius: 15px;
-
   display: flex;
   align-items: center;
-  padding: 12px 25px;
-  color: ${primary};
-  margin-bottom: 10px;
+  gap: ${space2};
+  padding: 10px ${space3};
+  background-color: ${colorBg};
+  border: 1px solid ${colorBorder};
+  color: ${colorText};
+  text-decoration: none;
+  transition: border-color ${transitionBase}, color ${transitionBase};
+
+  &:hover {
+    border-color: ${colorAccent};
+    color: ${colorAccent};
+  }
+`
+
+const StyledItemIcon = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
 `
 
 const StyledItemText = styled.div`
-  color: black;
-  margin-left: 20px;
+  font-size: 1rem;
 `
 
 const Footer = () => {
   return (
     <StyledRoot>
-      <div className="container">
-        <StyledTitle>How to contact me?</StyledTitle>
+      <StyledContainer>
+        <StyledLeft>
+          <StyledLabel>Contact</StyledLabel>
+          <StyledHeading>Get in touch</StyledHeading>
+        </StyledLeft>
         <StyledLinks>
           <StyledItem href="mailto:tran@tamtanguy.fr">
-            <FiMail />
+            <StyledItemIcon>
+              <FiMail />
+            </StyledItemIcon>
             <StyledItemText>tran@tamtanguy.fr</StyledItemText>
           </StyledItem>
           <StyledItem
@@ -53,11 +109,13 @@ const Footer = () => {
             target="blank"
             rel="noopener noreferrer"
           >
-            <FiLinkedin />
-            <StyledItemText>Linkedin</StyledItemText>
+            <StyledItemIcon>
+              <FiLinkedin />
+            </StyledItemIcon>
+            <StyledItemText>LinkedIn</StyledItemText>
           </StyledItem>
         </StyledLinks>
-      </div>
+      </StyledContainer>
     </StyledRoot>
   )
 }

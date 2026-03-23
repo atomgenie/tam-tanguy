@@ -1,246 +1,160 @@
 import React, { useState } from "react"
-import background from "./Background.png"
 import { data } from "data"
-import { FiFolder, FiExternalLink } from "react-icons/fi"
+import { FiExternalLink } from "react-icons/fi"
 import { Project } from "types"
 import ImgFocus from "./img-focus/ImgFocus"
 import ProjectMobile from "./Project.mobile"
-import styled, { css } from "styled-components"
-import { primary, tabletMax } from "styles/globals"
+import styled from "styled-components"
+import { useSpring, a } from "@react-spring/web"
+import {
+  colorBg,
+  colorBorder,
+  colorText,
+  colorTextMuted,
+  colorAccent,
+  containerStyles,
+  space2,
+  space3,
+  space4,
+  space5,
+  space6,
+  transitionBase,
+  tabletMax,
+} from "styles/globals"
 
-const StyledLeft = styled.div`
-  background-color: ${primary};
-  background-size: cover;
-  background-position: center;
+const StyledRoot = styled.div`
+  background-color: ${colorBg};
+  padding: ${space6} 0;
+`
+
+const StyledContainer = styled.div`
+  ${containerStyles}
+`
+
+const StyledLabel = styled.div`
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: ${colorTextMuted};
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: ${space2};
+`
+
+const StyledTitle = styled.h2`
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: ${colorText};
+  margin: 0 0 ${space5} 0;
+`
+
+const StyledGrid = styled.div`
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: ${space5};
+  align-items: flex-start;
+`
+
+const StyledProjectList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  min-height: 100%;
+  border: 1px solid ${colorBorder};
+  overflow: hidden;
+`
 
-  @media screen and (max-width: ${tabletMax}) {
-    align-items: center;
+interface ProjectItemProps {
+  $active: boolean
+}
+
+const StyledProjectItem = styled.div<ProjectItemProps>`
+  padding: 10px ${space3};
+  cursor: pointer;
+  border-left: 2px solid ${({ $active }) => ($active ? colorAccent : "transparent")};
+  background-color: ${colorBg};
+  color: ${colorText};
+  transition: border-left-color ${transitionBase};
+  border-bottom: 1px solid ${colorBorder};
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    border-left-color: ${colorAccent};
   }
 `
 
-const StyledLeftContainer = styled.div`
-  width: 400px;
-  max-width: 400px;
-  text-align: left;
-  padding: 50px 0 200px 0;
-
-  @media screen and (max-width: ${tabletMax}) {
-    padding: 50px 50px 20px 20px;
-    width: unset;
-  }
+const StyledProjectItemName = styled.div<{ $active: boolean }>`
+  font-size: 1rem;
+  font-weight: ${({ $active }) => ($active ? "800" : "400")};
 `
 
-const StyledTitle = styled.div`
-  color: white;
+const StyledDetail = styled(a.div)`
+  padding: ${space4} 0;
+`
+
+const StyledProjectName = styled.h3`
+  font-size: 1.4rem;
   font-weight: 800;
-  font-size: 1.3rem;
+  color: ${colorText};
+  margin: 0 0 ${space3} 0;
 `
 
-const StyledConversation = styled.div`
-  margin: 100px 0 0 0;
-  display: flex;
-  align-items: flex-end;
+const StyledPicture = styled.div`
+  margin-bottom: ${space3};
+  overflow: hidden;
+  border: 1px solid ${colorBorder};
+  max-width: 500px;
+  cursor: pointer;
 
-  @media screen and (max-width: ${tabletMax}) {
-    & {
-      margin: 20px 0 0 0;
+  img {
+    width: 100%;
+    display: block;
+    transition: opacity ${transitionBase};
+
+    &:hover {
+      opacity: 0.9;
     }
   }
 `
 
-const nameSize = "40px"
-
-const StyledName = styled.div`
-  background-color: white;
+const StyledTags = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: ${nameSize};
-  width: ${nameSize};
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: ${primary};
-  line-height: 1;
-`
-
-const StyledMessages = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 20px;
-`
-
-const messageStyles = css`
-  color: white;
-  padding: 7px 15px;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-top: 5px;
-  min-width: 150px;
-`
-
-const StyledMessageTop = styled.div`
-  ${messageStyles}
-  border-radius: 25px 25px 25px 5px;
-  font-weight: 800;
-`
-
-const StyledMessageBottom = styled.div`
-  ${messageStyles}
-  border-radius: 5px 25px 25px 25px;
-  max-height: 250px;
-  overflow-y: scroll;
-  /* total width */
-  &::-webkit-scrollbar {
-    background-color: rgba(0, 0, 0, 0);
-    width: 7px;
-  }
-
-  /* background of the scrollbar except button or resizer */
-  &::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0);
-  }
-
-  /* scrollbar itself */
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-
-  /* set button(top and bottom of the scrollbar) */
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-`
-
-const StyledProject = styled.div`
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  padding: 2px 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`
-
-const StyledProjectName = styled.div`
-  margin-left: 20px;
-`
-
-const StyledRight = styled.div`
-  padding: 70px 10px 70px 70px;
-  max-width: 550px;
-
-  @media screen and (max-width: ${tabletMax}) {
-    padding: 20px 50px 20px 50px;
-    display: flex;
-    justify-content: center;
-    max-width: none;
-  }
-`
-
-const StyledRightContainer = styled.div`
-  display: flex;
-  position: relative;
-`
-
-const StyledMessages2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 80px 0;
-
-  @media screen and (max-width: ${tabletMax}) {
-    padding: 20px 0;
-  }
-`
-
-const message2Styles = css`
-  color: black;
-  padding: 7px 20px;
-  background-color: rgba(0, 0, 0, 0.05);
-  margin-top: 5px;
-  min-width: 150px;
-  display: inline-flex;
-  gap: 5px;
   flex-wrap: wrap;
-  align-items: center;
-  max-width: 350px;
-`
-
-const StyledTopMessage2 = styled.div`
-  ${message2Styles}
-  background-color: ${primary};
-  color: white;
-  font-weight: 800;
-  border-radius: 25px 25px 25px 5px;
-`
-
-const StyledMiddleMessage2 = styled.div`
-  ${message2Styles}
-  border-radius: 5px 25px 25px 5px;
-`
-
-const StyledMessageBottom2 = styled.div`
-  ${message2Styles}
-  border-radius: 5px 25px 25px 25px;
-`
-
-const StyledPicture = styled.div`
-  margin-top: 5px;
-  cursor: pointer;
-
-  overflow: hidden;
-  border-radius: 5px 25px 25px 5px;
-  border: 1px solid rgba(0, 93, 169, 0.1);
-  max-height: 350px;
-  max-width: 450px;
-
-  > img {
-    width: 100%;
-  }
+  gap: 16px;
+  margin-bottom: ${space3};
 `
 
 const StyledTag = styled.div`
-  border-radius: 999px;
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 2px 15px;
-  white-space: nowrap;
+  color: ${colorTextMuted};
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  font-variant: all-small-caps;
+  padding: 0;
 `
 
-const StyledLink = styled.div`
-  position: absolute;
-  right: 10px;
+const StyledDescription = styled.p`
+  color: ${colorTextMuted};
+  line-height: 1.7;
+  margin: 0 0 ${space3} 0;
+  max-width: 520px;
 `
 
-const StyledLinkElm = styled.div`
-  color: black;
-  margin-left: 10px;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 999px;
-  padding: 7px 15px;
-  display: flex;
-  justify-content: center;
-  line-height: 1;
-  cursor: pointer;
+const StyledLinkButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background-color: ${colorAccent};
+  color: ${colorBg};
+  border: 1px solid ${colorAccent};
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color ${transitionBase}, color ${transitionBase};
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    color: ${colorAccent};
   }
-`
-
-const StyledLinkName = styled.div`
-  margin-right: 20px;
-  white-space: nowrap;
 `
 
 const Projects = () => {
@@ -248,85 +162,75 @@ const Projects = () => {
   const [openFocus, setOpenFocus] = useState(false)
   const [focusImg, setFocusImg] = useState<string | undefined>()
 
+  const fadeIn = useSpring({
+    key: project.name,
+    from: { opacity: 0, transform: "translateY(8px)" },
+    to: { opacity: 1, transform: "translateY(0px)" },
+    config: { tension: 200, friction: 25 },
+    reset: true,
+  })
+
   if (window.innerWidth <= 1023) {
     return <ProjectMobile />
   }
 
   return (
-    <div>
+    <StyledRoot>
       <ImgFocus
         isOpen={openFocus}
         imgUrl={focusImg}
         onClose={() => setOpenFocus(false)}
       />
-      <div className="columns is-multiline">
-        <div className="column is-12-tablet is-6-desktop is-5-fullhd is-5-widescreen">
-          <StyledLeft style={{ backgroundImage: `url(${background})` }}>
-            <StyledLeftContainer>
-              <StyledTitle>Projects</StyledTitle>
-              <StyledConversation>
-                <StyledName>TT</StyledName>
-                <StyledMessages>
-                  <StyledMessageTop>
-                    Which project would you like to see?
-                  </StyledMessageTop>
-                  <StyledMessageBottom>
-                    {data.projects.map(project => (
-                      <StyledProject
-                        key={project.name}
-                        onClick={() => setProject(project)}
-                      >
-                        <FiFolder fill="white" />
-                        <StyledProjectName>{project.name}</StyledProjectName>
-                      </StyledProject>
-                    ))}
-                  </StyledMessageBottom>
-                </StyledMessages>
-              </StyledConversation>
-            </StyledLeftContainer>
-          </StyledLeft>
-        </div>
-        <div className="column">
-          <StyledRight>
-            <StyledRightContainer>
-              <StyledMessages2>
-                <StyledTopMessage2>{project.name}</StyledTopMessage2>
-                {project.picture && (
-                  <StyledPicture>
-                    <img
-                      src={project.picture}
-                      alt={`${project.name} illustration`}
-                      onClick={() => {
-                        setFocusImg(project.picture)
-                        setOpenFocus(true)
-                      }}
-                    />
-                  </StyledPicture>
-                )}
-                {project.tags.length > 0 && (
-                  <StyledMiddleMessage2>
-                    {project.tags.map(tag => (
-                      <StyledTag key={tag}>{tag}</StyledTag>
-                    ))}
-                  </StyledMiddleMessage2>
-                )}
-                <StyledMessageBottom2>{project.description}</StyledMessageBottom2>
-              </StyledMessages2>
-              {project.link && (
-                <StyledLink>
-                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                    <StyledLinkElm>
-                      <StyledLinkName>View project</StyledLinkName>
-                      <FiExternalLink />
-                    </StyledLinkElm>
-                  </a>
-                </StyledLink>
-              )}
-            </StyledRightContainer>
-          </StyledRight>
-        </div>
-      </div>
-    </div>
+      <StyledContainer>
+        <StyledLabel>Work</StyledLabel>
+        <StyledTitle>Projects</StyledTitle>
+        <StyledGrid>
+          <StyledProjectList>
+            {data.projects.map(p => (
+              <StyledProjectItem
+                key={p.name}
+                $active={p.name === project.name}
+                onClick={() => setProject(p)}
+              >
+                <StyledProjectItemName $active={p.name === project.name}>
+                  {p.name}
+                </StyledProjectItemName>
+              </StyledProjectItem>
+            ))}
+          </StyledProjectList>
+
+          <StyledDetail style={fadeIn}>
+            <StyledProjectName>{project.name}</StyledProjectName>
+            {project.picture && (
+              <StyledPicture>
+                <img
+                  src={project.picture}
+                  alt={`${project.name} illustration`}
+                  onClick={() => {
+                    setFocusImg(project.picture)
+                    setOpenFocus(true)
+                  }}
+                />
+              </StyledPicture>
+            )}
+            {project.tags.length > 0 && (
+              <StyledTags>
+                {project.tags.map(tag => (
+                  <StyledTag key={tag}>{tag}</StyledTag>
+                ))}
+              </StyledTags>
+            )}
+            <StyledDescription>{project.description}</StyledDescription>
+            {project.link && (
+              <StyledLinkButton href={project.link} target="_blank" rel="noopener noreferrer">
+                View project
+                <FiExternalLink />
+              </StyledLinkButton>
+            )}
+          </StyledDetail>
+        </StyledGrid>
+      </StyledContainer>
+    </StyledRoot>
   )
 }
 
