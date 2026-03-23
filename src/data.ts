@@ -1,6 +1,6 @@
 import { Project } from "./types"
 
-const pictureFolder = process.env.PUBLIC_URL + "/pictures/"
+const pictureFolder = import.meta.env.BASE_URL + "pictures/"
 
 export const data: {
   skills: readonly { name: string; amount: number }[]
