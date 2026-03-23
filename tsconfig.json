@@ -18,7 +18,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src",
+    "paths": {
+      "data": ["./src/data.ts"],
+      "types": ["./src/types.ts"],
+      "styles/*": ["./src/styles/*"],
+      "helpers/*": ["./src/helpers/*"]
+    },
     "noFallthroughCasesInSwitch": true
   },
   "include": [
