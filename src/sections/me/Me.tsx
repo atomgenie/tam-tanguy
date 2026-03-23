@@ -351,7 +351,7 @@ const Me = () => {
                   name="fa-form-1"
                   action="https://webhook.frontapp.com/forms/sean_test_3_30/UP11od99tgc3bLn3olHRtBQzVOks1SUHHzYrmkN4XgZajeRRVgkXfpCJH50vwrfOOHPrxjeF9pG5p49a0M3T3ibr6jPRKdro-HuS-tPOecG_T1X-FkQ"
                   encType="multipart/form-data"
-                  accept-charset="utf-8"
+                  acceptCharset="utf-8"
                 >
                   <StyledInputDiv>
                     <input type="text" name="name" placeholder="Name" />
