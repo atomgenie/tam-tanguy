@@ -232,29 +232,27 @@ const Me = () => {
             <StyledHeading>Tâm-Tanguy Tran</StyledHeading>
             <StyledBio>
               <StyledBioParagraph>
-                I'm a student at{" "}
+                I'm a Software Engineer at{" "}
+                <SpecialLink href="https://front.com/">Front</SpecialLink>, where I've
+                been working since 2021 — starting as an intern before joining full-time.
+              </StyledBioParagraph>
+              <StyledBioParagraph>
+                I graduated from{" "}
                 <SpecialLink href="https://www.epita.fr/">EPITA</SpecialLink>, a French
-                engineering and computer science focused school. I'm part of the{" "}
+                engineering and computer science school, as part of the{" "}
                 <SpecialLink href="https://www.epita.fr/nos-formations/diplome-ingenieur/cycle-ingenieur/les-majeures/#majeure-MTI">
                   MTI
                 </SpecialLink>{" "}
-                class. I'm learning programming and algorithms basics to advanced concepts
-                in web technologies, C / C++, Linux, AI&hellip;
+                class (Multimedia and Information Technology).
               </StyledBioParagraph>
               <StyledBioParagraph>
-                Aside from my academic courses I'm learning web technologies — TypeScript
-                / JavaScript with Node.js, React.js and Vue.js, Docker, Kubernetes, cloud
-                providers (GCP, AWS, Azure), and other web basics (HTML, CSS, PHP,
-                MySQL / MariaDB, MongoDB).
+                Before Front, I interned at and then freelanced for{" "}
+                <SpecialLink href="https://makemereach.com/">MakeMeReach</SpecialLink> as
+                a Full Stack Engineer.
               </StyledBioParagraph>
               <StyledBioParagraph>
-                During my third year, I taught first-year students the basics of
-                programming, particularly in OCaml and C#.
-              </StyledBioParagraph>
-              <StyledBioParagraph>
-                I'm working as a freelancer aside of EPITA for{" "}
-                <SpecialLink href="https://makemereach.com/">MakeMeReach</SpecialLink>,
-                the company where I did my fourth year internship.
+                During my studies at EPITA, I also taught first-year students the basics
+                of programming, particularly in OCaml and C#.
               </StyledBioParagraph>
             </StyledBio>
 
