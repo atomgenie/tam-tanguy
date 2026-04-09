@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
-            name="description"
-            content="Tâm-Tanguy TRAN | Software Engineer at Front | Fullstack developer"
-        />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <title>Tâm-Tanguy TRAN</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap"
-            rel="stylesheet"
-        />
-    </head>
-    <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root"></div>
-        <script src="https://chat-assets.frontapp.com/v1/chat.bundle.js"></script>
-        <script>
-          window.FrontChat('init', {chatId: '355cc768bb32c7cedb2678006e23faf8', useDefaultLauncher: true});
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Tâm-Tanguy TRAN | Software Engineer at Front | Fullstack developer" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Tâm-Tanguy TRAN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script src="https://chat-assets.frontapp.com/v1/chat.bundle.js"></script>
+    <script>
+        window.FrontChat('init', { chatId: '355cc768bb32c7cedb2678006e23faf8', useDefaultLauncher: true });
+    </script>
+    <script type="module" src="/src/index.tsx"></script>
+    <script type="module" id="front-companion-script" src="https://companion.frontapp.com/assets/boot.bundle.js"
+        data-container-id="companion-container" data-token="eyJjbyI6MjYwMjgsImNhIjoyNjc3NTExOH0" data-auto-init
+        data-layout="sidebar-left" data-side-margin="10" data-bottom-margin="10">
         </script>
-        <script type="module" src="/src/index.tsx"></script>
-    </body>
+</body>
+
 </html>
