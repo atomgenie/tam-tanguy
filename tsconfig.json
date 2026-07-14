@@ -22,7 +22,8 @@
       "data": ["./src/data.ts"],
       "types": ["./src/types.ts"],
       "styles/*": ["./src/styles/*"],
-      "helpers/*": ["./src/helpers/*"]
+      "helpers/*": ["./src/helpers/*"],
+      "components/*": ["./src/components/*"]
     },
     "noFallthroughCasesInSwitch": true
   },

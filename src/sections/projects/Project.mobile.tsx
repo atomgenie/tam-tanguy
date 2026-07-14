@@ -6,18 +6,11 @@ import CardMobile from "./card-mobile/CardMobile"
 import { data } from "data"
 import { useDrag } from "@use-gesture/react"
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi"
-import styled, { css } from "styled-components"
-import {
-  colorBg,
-  colorBorder,
-  colorText,
-  colorAccent,
-  containerStyles,
-  space2,
-  space3,
-  space5,
-  transitionBase,
-} from "styles/globals"
+import styled from "styled-components"
+import Overline from "components/Overline"
+import Button from "components/Button"
+import { usePrefersReducedMotion } from "helpers/hooks"
+import { colorBg, colorText, fontSerif, containerStyles, space2, space3, space5 } from "styles/globals"
 
 const trigger = 80
 const maxElements = 2
@@ -33,18 +26,10 @@ const StyledContainer = styled.div`
   ${containerStyles}
 `
 
-const StyledLabel = styled.div`
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #6b6b6b;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: ${space2};
-`
-
 const StyledTitle = styled.div`
+  font-family: ${fontSerif};
   color: ${colorText};
-  font-weight: 800;
+  font-weight: 400;
   font-size: 1.5rem;
 `
 
@@ -56,34 +41,6 @@ const StyledNavigation = styled.div`
   gap: ${space2};
 `
 
-const btnBaseStyles = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 36px;
-  width: 36px;
-  outline: none;
-  border: 1px solid ${colorBorder};
-  background-color: ${colorBg};
-  color: ${colorText};
-  cursor: pointer;
-  transition: background-color ${transitionBase}, color ${transitionBase}, border-color ${transitionBase};
-
-  &:hover {
-    background-color: ${colorAccent};
-    color: ${colorBg};
-    border-color: ${colorAccent};
-  }
-`
-
-const StyledBtnPrev = styled.button`
-  ${btnBaseStyles}
-`
-
-const StyledBtnNext = styled.button`
-  ${btnBaseStyles}
-`
-
 const StyledProjects = styled.div`
   position: relative;
   height: 500px;
@@ -93,6 +50,7 @@ const StyledProjects = styled.div`
 const ProjectMobile = () => {
   const [position, setPosition] = useState(0)
   const [showTips, setShowTips] = useState(true)
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [springs, set] = useSprings(data.projects.length, index => ({
     top: index < maxElements + 1 ? index * 30 : 0,
     scale: index < maxElements + 1 ? `scale(${1 - index * 0.1})` : `scale(1)`,
@@ -101,7 +59,7 @@ const ProjectMobile = () => {
   }))
 
   useEffect(() => {
-    if (!showTips) {
+    if (!showTips || prefersReducedMotion) {
       return
     }
 
@@ -129,7 +87,7 @@ const ProjectMobile = () => {
     return () => {
       clearInterval(tipsInterval)
     }
-  }, [set, showTips])
+  }, [set, showTips, prefersReducedMotion])
 
   useEffect(() => {
     if (position >= data.projects.length) {
@@ -194,15 +152,15 @@ const ProjectMobile = () => {
   return (
     <StyledRoot>
       <StyledContainer>
-        <StyledLabel>Work</StyledLabel>
+        <Overline>Work</Overline>
         <StyledTitle>Projects</StyledTitle>
         <StyledNavigation>
-          <StyledBtnPrev onClick={() => setPosition(position - 1)}>
+          <Button variant="secondary" size="icon" onClick={() => setPosition(position - 1)}>
             <FiArrowLeft />
-          </StyledBtnPrev>
-          <StyledBtnNext onClick={() => setPosition(position + 1)}>
+          </Button>
+          <Button variant="secondary" size="icon" onClick={() => setPosition(position + 1)}>
             <FiArrowRight />
-          </StyledBtnNext>
+          </Button>
         </StyledNavigation>
         <StyledProjects>
           {data.projects.map((project, pos) => {
