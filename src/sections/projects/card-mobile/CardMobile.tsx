@@ -2,16 +2,8 @@ import React from "react"
 import { Project } from "types"
 import { FiExternalLink } from "react-icons/fi"
 import styled from "styled-components"
-import {
-  colorBg,
-  colorBorder,
-  colorText,
-  colorTextMuted,
-  colorAccent,
-  space2,
-  space3,
-  transitionBase,
-} from "styles/globals"
+import Button from "components/Button"
+import { colorBg, colorBorder, colorText, colorTextMuted, fontSerif, space2, space3 } from "styles/globals"
 
 interface props {
   project: Project
@@ -33,6 +25,7 @@ const StyledPicture = styled.div`
   img {
     width: 100%;
     display: block;
+    filter: grayscale(1);
   }
 `
 
@@ -41,9 +34,10 @@ const StyledContent = styled.div`
 `
 
 const StyledProjectName = styled.div`
+  font-family: ${fontSerif};
   color: ${colorText};
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 1.125rem;
+  font-weight: 400;
 `
 
 const StyledTags = styled.div`
@@ -56,7 +50,7 @@ const StyledTags = styled.div`
 const StyledTag = styled.div`
   white-space: nowrap;
   color: ${colorTextMuted};
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   font-variant: all-small-caps;
 `
@@ -72,24 +66,6 @@ const StyledLink = styled.a`
   right: 12px;
   top: 12px;
   text-decoration: none;
-`
-
-const StyledLinkElm = styled.div`
-  background-color: ${colorAccent};
-  border: 1px solid ${colorAccent};
-  padding: 6px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  line-height: 1;
-  color: ${colorBg};
-  font-size: 0.9rem;
-  transition: background-color ${transitionBase}, color ${transitionBase};
-
-  &:hover {
-    background-color: transparent;
-    color: ${colorAccent};
-  }
 `
 
 const CardMobile: React.FC<props> = ({ project }) => {
@@ -110,10 +86,10 @@ const CardMobile: React.FC<props> = ({ project }) => {
         <StyledDescription>{project.description}</StyledDescription>
         {project.link && (
           <StyledLink target="_blank" href={project.link} rel="noopener noreferrer">
-            <StyledLinkElm>
+            <Button as="span" variant="primary" size="default">
               View project
               <FiExternalLink />
-            </StyledLinkElm>
+            </Button>
           </StyledLink>
         )}
       </StyledContent>

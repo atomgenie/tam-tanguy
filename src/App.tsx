@@ -4,9 +4,11 @@ import Hello from "./sections/hello/Hello"
 import Me from "./sections/me/Me"
 import Projects from "./sections/projects/Projects"
 import Footer from "./sections/footer/Footer"
+import GridLines from "./components/GridLines"
+import NoiseOverlay from "./components/NoiseOverlay"
 import styled from "styled-components"
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5"
-import { colorAccent } from "./styles/globals"
+import { colorBg, colorText, colorAccent, transitionBase, shadowSm, shadowMd } from "./styles/globals"
 
 const FloatingButton = styled.a`
   position: fixed;
@@ -14,25 +16,28 @@ const FloatingButton = styled.a`
   left: 24px;
   width: 52px;
   height: 52px;
-  border-radius: 50%;
-  background-color: ${colorAccent};
-  color: #fff;
+  background-color: ${colorBg};
+  border: 1px solid ${colorText};
+  color: ${colorText};
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: ${shadowSm};
+  transition: border-color ${transitionBase}, color ${transitionBase}, box-shadow ${transitionBase};
   z-index: 1000;
 
   &:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    border-color: ${colorAccent};
+    color: ${colorAccent};
+    box-shadow: ${shadowMd};
   }
 `
 
 const App = () => {
   return (
     <>
+      <GridLines />
+      <NoiseOverlay />
       <Hello />
       <Me />
       <Projects />

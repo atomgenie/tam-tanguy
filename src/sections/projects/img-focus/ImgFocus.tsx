@@ -16,7 +16,7 @@ const StyledRoot = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(26, 26, 26, 0.85);
   height: 100vh;
   max-height: 100vh;
   padding: 80px 20px;

@@ -5,25 +5,33 @@ import { Project } from "types"
 import ImgFocus from "./img-focus/ImgFocus"
 import ProjectMobile from "./Project.mobile"
 import styled from "styled-components"
-import { useSpring, a } from "@react-spring/web"
+import { useSpring, a, easings } from "@react-spring/web"
+import Overline from "components/Overline"
+import Button from "components/Button"
+import { usePrefersReducedMotion } from "helpers/hooks"
 import {
-  colorBg,
-  colorBorder,
-  colorText,
-  colorTextMuted,
+  colorBgInverted,
+  colorTextInverted,
+  colorTextInvertedMuted,
   colorAccent,
   containerStyles,
+  fontSerif,
   space2,
   space3,
   space4,
   space5,
   space6,
   transitionBase,
-  tabletMax,
+  transitionFast,
+  transitionImage,
+  shadowSm,
+  shadowMd,
 } from "styles/globals"
 
+const invertedBorder = "rgba(249, 248, 246, 0.16)"
+
 const StyledRoot = styled.div`
-  background-color: ${colorBg};
+  background-color: ${colorBgInverted};
   padding: ${space6} 0;
 `
 
@@ -31,19 +39,11 @@ const StyledContainer = styled.div`
   ${containerStyles}
 `
 
-const StyledLabel = styled.div`
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: ${colorTextMuted};
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: ${space2};
-`
-
 const StyledTitle = styled.h2`
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: ${colorText};
+  font-family: ${fontSerif};
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 400;
+  color: ${colorTextInverted};
   margin: 0 0 ${space5} 0;
 `
 
@@ -57,7 +57,7 @@ const StyledGrid = styled.div`
 const StyledProjectList = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${colorBorder};
+  border: 1px solid ${invertedBorder};
   overflow: hidden;
 `
 
@@ -69,10 +69,9 @@ const StyledProjectItem = styled.div<ProjectItemProps>`
   padding: 10px ${space3};
   cursor: pointer;
   border-left: 2px solid ${({ $active }) => ($active ? colorAccent : "transparent")};
-  background-color: ${colorBg};
-  color: ${colorText};
+  color: ${colorTextInverted};
   transition: border-left-color ${transitionBase};
-  border-bottom: 1px solid ${colorBorder};
+  border-bottom: 1px solid ${invertedBorder};
 
   &:last-child {
     border-bottom: none;
@@ -84,8 +83,8 @@ const StyledProjectItem = styled.div<ProjectItemProps>`
 `
 
 const StyledProjectItemName = styled.div<{ $active: boolean }>`
-  font-size: 1rem;
-  font-weight: ${({ $active }) => ($active ? "800" : "400")};
+  font-size: 0.75rem;
+  font-weight: ${({ $active }) => ($active ? "600" : "400")};
 `
 
 const StyledDetail = styled(a.div)`
@@ -93,26 +92,35 @@ const StyledDetail = styled(a.div)`
 `
 
 const StyledProjectName = styled.h3`
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: ${colorText};
+  font-family: ${fontSerif};
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: ${colorTextInverted};
   margin: 0 0 ${space3} 0;
 `
 
 const StyledPicture = styled.div`
   margin-bottom: ${space3};
   overflow: hidden;
-  border: 1px solid ${colorBorder};
+  border: 1px solid ${invertedBorder};
+  box-shadow: ${shadowSm};
   max-width: 500px;
   cursor: pointer;
+  transition: box-shadow ${transitionFast};
+
+  &:hover {
+    box-shadow: ${shadowMd};
+  }
 
   img {
     width: 100%;
     display: block;
-    transition: opacity ${transitionBase};
+    filter: grayscale(1);
+    transition: filter ${transitionImage}, transform ${transitionImage};
 
     &:hover {
-      opacity: 0.9;
+      filter: grayscale(0);
+      transform: scale(1.05);
     }
   }
 `
@@ -125,49 +133,33 @@ const StyledTags = styled.div`
 `
 
 const StyledTag = styled.div`
-  color: ${colorTextMuted};
-  font-size: 0.8rem;
+  color: ${colorTextInvertedMuted};
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   font-variant: all-small-caps;
   padding: 0;
 `
 
 const StyledDescription = styled.p`
-  color: ${colorTextMuted};
-  line-height: 1.7;
+  color: ${colorTextInvertedMuted};
+  line-height: 1.625;
   margin: 0 0 ${space3} 0;
   max-width: 520px;
-`
-
-const StyledLinkButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  background-color: ${colorAccent};
-  color: ${colorBg};
-  border: 1px solid ${colorAccent};
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background-color ${transitionBase}, color ${transitionBase};
-
-  &:hover {
-    background-color: transparent;
-    color: ${colorAccent};
-  }
 `
 
 const Projects = () => {
   const [project, setProject] = useState<Project>(data.projects[0])
   const [openFocus, setOpenFocus] = useState(false)
   const [focusImg, setFocusImg] = useState<string | undefined>()
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const fadeIn = useSpring({
     key: project.name,
     from: { opacity: 0, transform: "translateY(8px)" },
     to: { opacity: 1, transform: "translateY(0px)" },
-    config: { tension: 200, friction: 25 },
+    config: { duration: 900, easing: easings.easeOutCubic },
     reset: true,
+    immediate: prefersReducedMotion,
   })
 
   if (window.innerWidth <= 1023) {
@@ -182,7 +174,7 @@ const Projects = () => {
         onClose={() => setOpenFocus(false)}
       />
       <StyledContainer>
-        <StyledLabel>Work</StyledLabel>
+        <Overline $inverted>Work</Overline>
         <StyledTitle>Projects</StyledTitle>
         <StyledGrid>
           <StyledProjectList>
@@ -206,7 +198,9 @@ const Projects = () => {
                 <img
                   src={project.picture}
                   alt={`${project.name} illustration`}
-                  onClick={() => {
+                  draggable={false}
+                  onClick={e => {
+                    e.stopPropagation()
                     setFocusImg(project.picture)
                     setOpenFocus(true)
                   }}
@@ -222,10 +216,10 @@ const Projects = () => {
             )}
             <StyledDescription>{project.description}</StyledDescription>
             {project.link && (
-              <StyledLinkButton href={project.link} target="_blank" rel="noopener noreferrer">
+              <Button as="a" href={project.link} target="_blank" rel="noopener noreferrer" variant="primary" $inverted>
                 View project
                 <FiExternalLink />
-              </StyledLinkButton>
+              </Button>
             )}
           </StyledDetail>
         </StyledGrid>

@@ -1,18 +1,17 @@
 import React from "react"
 import { FiMail, FiLinkedin } from "react-icons/fi"
 import styled from "styled-components"
+import Overline from "components/Overline"
+import Button from "components/Button"
 import {
   colorBg,
   colorBorder,
   colorText,
-  colorTextMuted,
-  colorAccent,
+  fontSerif,
   containerStyles,
   space2,
-  space3,
   space4,
   space5,
-  transitionBase,
   tabletMax,
 } from "styles/globals"
 
@@ -36,18 +35,10 @@ const StyledContainer = styled.div`
 
 const StyledLeft = styled.div``
 
-const StyledLabel = styled.div`
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: ${colorTextMuted};
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: ${space2};
-`
-
 const StyledHeading = styled.div`
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-family: ${fontSerif};
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 400;
   color: ${colorText};
 `
 
@@ -62,58 +53,29 @@ const StyledLinks = styled.div`
   }
 `
 
-const StyledItem = styled.a`
-  display: flex;
-  align-items: center;
-  gap: ${space2};
-  padding: 10px ${space3};
-  background-color: ${colorBg};
-  border: 1px solid ${colorBorder};
-  color: ${colorText};
-  text-decoration: none;
-  transition: border-color ${transitionBase}, color ${transitionBase};
-
-  &:hover {
-    border-color: ${colorAccent};
-    color: ${colorAccent};
-  }
-`
-
-const StyledItemIcon = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-`
-
-const StyledItemText = styled.div`
-  font-size: 1rem;
-`
-
 const Footer = () => {
   return (
     <StyledRoot>
       <StyledContainer>
         <StyledLeft>
-          <StyledLabel>Contact</StyledLabel>
+          <Overline>Contact</Overline>
           <StyledHeading>Get in touch</StyledHeading>
         </StyledLeft>
         <StyledLinks>
-          <StyledItem href="mailto:tran@tamtanguy.fr">
-            <StyledItemIcon>
-              <FiMail />
-            </StyledItemIcon>
-            <StyledItemText>tran@tamtanguy.fr</StyledItemText>
-          </StyledItem>
-          <StyledItem
+          <Button as="a" variant="secondary" href="mailto:tran@tamtanguy.fr">
+            <FiMail />
+            tran@tamtanguy.fr
+          </Button>
+          <Button
+            as="a"
+            variant="secondary"
             href="https://www.linkedin.com/in/t%C3%A2m-tanguy-tran-14028a1ab/"
             target="blank"
             rel="noopener noreferrer"
           >
-            <StyledItemIcon>
-              <FiLinkedin />
-            </StyledItemIcon>
-            <StyledItemText>LinkedIn</StyledItemText>
-          </StyledItem>
+            <FiLinkedin />
+            LinkedIn
+          </Button>
         </StyledLinks>
       </StyledContainer>
     </StyledRoot>
