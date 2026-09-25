@@ -1,0 +1,292 @@
+<meta name="theme-color" content="#1A1A1A" />
+<meta name="color-scheme" content="light" />
+<link rel="apple-touch-icon" href="{{ "logo192.png" | relURL }}" />
+<link rel="manifest" href="{{ "manifest.json" | relURL }}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* Light branding on top of the Bear Blog theme: fonts + Luxury/Editorial palette.
+     Light mode only: this unconditional :root comes after the theme's
+     prefers-color-scheme: dark block, so it wins in both schemes. */
+  :root {
+    color-scheme: light;
+    --font-main: "Playfair Display", Georgia, serif;
+    --font-secondary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --background-color: #F9F8F6;
+    --heading-color: #1A1A1A;
+    --text-color: #4A4743;
+    --muted-color: #6C6863;
+    --border-color: rgba(26, 26, 26, 0.12);
+    --accent-color: #D4AF37;
+    --link-color: #8A6D1F;
+    --visited-color: #8A6D1F;
+    --blockquote-color: #1A1A1A;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+  }
+
+  h1 {
+    font-size: 2.25em;
+    line-height: 1.1;
+    margin-top: 0.25em;
+  }
+
+  main h2 {
+    margin-top: 2em;
+  }
+
+  header .title h2 {
+    font-weight: 500;
+  }
+
+  nav a {
+    font-size: 0.75em;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--heading-color);
+    margin-right: 16px;
+  }
+
+  nav a:hover {
+    color: var(--link-color);
+  }
+
+  footer {
+    font-size: 0.8em;
+    color: var(--muted-color);
+    border-top: 1px solid var(--border-color);
+    margin-top: 48px;
+  }
+
+  hr {
+    border-top: 1px solid var(--border-color);
+  }
+
+  .overline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0 0;
+    font-size: 0.6875em;
+    font-weight: 500;
+    color: var(--muted-color);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+  }
+
+  .overline::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.5;
+  }
+
+  /* Skills */
+  .skills {
+    list-style: none;
+    padding: 0;
+  }
+
+  .skills li {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin: 12px 0;
+  }
+
+  .skill-name {
+    flex: 0 0 130px;
+    color: var(--heading-color);
+    font-size: 0.9em;
+  }
+
+  .skill-bar {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-color);
+  }
+
+  .skill-bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background-color: var(--heading-color);
+  }
+
+  .skill-bar-fill::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent-color);
+  }
+
+  /* Projects */
+  .project {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .project:last-child {
+    border-bottom: none;
+  }
+
+  .project h2 {
+    margin: 0 0 16px;
+  }
+
+  .project-picture {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin-bottom: 16px;
+  }
+
+  .project-picture img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(1);
+    transition: filter 1800ms ease-out, transform 1800ms ease-out;
+  }
+
+  .project-picture:hover img {
+    filter: grayscale(0);
+    transform: scale(1.05);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px;
+    color: var(--muted-color);
+    font-size: 0.8em;
+    letter-spacing: 0.06em;
+    font-variant: all-small-caps;
+  }
+
+  /* Buttons */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 32px;
+    border: 1px solid var(--heading-color);
+    background-color: var(--heading-color);
+    color: var(--background-color);
+    font-family: var(--font-secondary);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 600ms ease-out, color 600ms ease-out;
+  }
+
+  a.button:visited {
+    color: var(--background-color);
+  }
+
+  .button:hover {
+    text-decoration: none;
+    background-color: transparent;
+    color: var(--heading-color);
+  }
+
+  .button:focus-visible {
+    outline: 1px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+
+  /* Contact form */
+  .contact-form {
+    margin-top: 32px;
+  }
+
+  .contact-form label {
+    display: block;
+    font-size: 0.75em;
+    color: var(--muted-color);
+    margin-top: 24px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    background: transparent;
+    font: inherit;
+    color: var(--heading-color);
+    outline: none;
+    appearance: none;
+    transition: border-color 600ms ease-out;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--accent-color);
+  }
+
+  .contact-form ::placeholder {
+    font-family: var(--font-main);
+    font-style: italic;
+    color: var(--muted-color);
+  }
+
+  .contact-form textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .contact-form .button {
+    margin-top: 32px;
+  }
+
+  /* Floating Companion link, bottom-left so it doesn't collide with the Front Chat launcher */
+  .floating-chat {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--heading-color);
+    background-color: var(--background-color);
+    color: var(--heading-color);
+    box-shadow: 0 1px 2px rgba(26, 26, 26, 0.06);
+    transition: border-color 600ms ease-out, color 600ms ease-out;
+    z-index: 1000;
+  }
+
+  .floating-chat:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+    }
+  }
+</style>

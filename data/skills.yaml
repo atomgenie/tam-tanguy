@@ -1,0 +1,23 @@
+# Rendered in file order: keep sorted by amount, highest first.
+- name: TypeScript
+  amount: 90
+- name: Node.js
+  amount: 85
+- name: React.js
+  amount: 85
+- name: HTML / CSS
+  amount: 80
+- name: JavaScript
+  amount: 75
+- name: Docker
+  amount: 70
+- name: C#
+  amount: 70
+- name: Linux / Shell
+  amount: 65
+- name: Terraform
+  amount: 40
+- name: Kubernetes
+  amount: 35
+- name: Python
+  amount: 35

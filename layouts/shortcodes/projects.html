@@ -1,0 +1,24 @@
+<div class="projects">
+  {{- range $project := hugo.Data.projects }}
+  <article class="project">
+    <h2>{{ .name }}</h2>
+    {{- with .picture }}
+    {{- $size := imageConfig (path.Join "static" .) }}
+    <a class="project-picture" href="{{ . | relURL }}" target="_blank" rel="noopener noreferrer">
+      <img src="{{ . | relURL }}" alt="{{ $project.name }} illustration" width="{{ $size.Width }}" height="{{ $size.Height }}" loading="lazy" decoding="async">
+    </a>
+    {{- end }}
+    {{- with .tags }}
+    <ul class="tags">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end }}
+    </ul>
+    {{- end }}
+    <p>{{ .description }}</p>
+    {{- with .link }}
+    <p><a class="button" href="{{ . }}" target="_blank" rel="noopener noreferrer">View project →</a></p>
+    {{- end }}
+  </article>
+  {{- end }}
+</div>

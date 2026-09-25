@@ -1,0 +1,10 @@
+<ul class="skills">
+  {{- range hugo.Data.skills }}
+  <li>
+    <span class="skill-name">{{ .name }}</span>
+    <span class="skill-bar" role="meter" aria-label="{{ .name }}" aria-valuenow="{{ .amount }}" aria-valuemin="0" aria-valuemax="100">
+      <span class="skill-bar-fill" style="width: {{ .amount }}%"></span>
+    </span>
+  </li>
+  {{- end }}
+</ul>
