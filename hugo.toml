@@ -1,0 +1,28 @@
+baseURL = "https://tam-tanguy.atomgenie1.vercel.app/"
+theme = "hugo-bearblog"
+
+title = "Tâm-Tanguy TRAN"
+author = "Tâm-Tanguy TRAN"
+copyright = "© Tâm-Tanguy TRAN"
+locale = "en-US"
+
+enableRobotsTXT = true
+
+# No blog, no tags: just a home page and a projects page.
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Tâm-Tanguy TRAN | Software Engineer at Front | Fullstack developer"
+  favicon = "logo192.png"
+  images = ["pictures/personal.png"]
+  title = "Tâm-Tanguy TRAN"
+
+[[menus.main]]
+  name = "Home"
+  pageRef = "/"
+  weight = 1
+
+[[menus.main]]
+  name = "Projects"
+  pageRef = "/projects"
+  weight = 2
